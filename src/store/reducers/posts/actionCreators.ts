@@ -2,9 +2,9 @@ import { PostsAction, PostsActionEnum } from './type';
 import { IPost } from './../../../models/IPost';
 import { AppDispatch } from '../..';
 
-
 export const PostsActionCreators = {
   setPosts: (payload: IPost[]): PostsAction => ({ type: PostsActionEnum.SetPosts, payload }),
+
   fetchPosts: () => async (dispatch: AppDispatch) => {
     try {
       const posts = localStorage.getItem('posts') || '[]';
@@ -14,6 +14,7 @@ export const PostsActionCreators = {
       alert(e);
     }
   },
+
   createPost: (post: IPost) => async (dispatch: AppDispatch) => {
     try {
       const posts = localStorage.getItem('posts') || '[]';
