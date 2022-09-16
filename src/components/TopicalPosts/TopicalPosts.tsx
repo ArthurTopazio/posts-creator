@@ -14,11 +14,9 @@ const TopicalPosts: FC<TopicalPostsTPD> = ({ posts }) => {
   const postsList = topicalPosts.reverse().map(post =>
     <Post key={post.id} {...{ post }} size='sm' />);
 
-  console.log('Topical posts', topicalPosts);
-
   return (
     <GridElementWrapper>
-      {postsList}
+      {posts.length === 0 ? <h2>Last 5 posts</h2> : postsList}
     </GridElementWrapper>
   )
 }

@@ -5,10 +5,15 @@ export default function useInput(initialValue: any) {
 
   const onChange = (e: any) => {
     setValue(e.target.value)
-  };
+  }
+
+  const clearValue = () => {
+    setValue('')
+  }
 
   return {
     value,
-    onChange
+    onChange,
+    clearValue
   }
 };

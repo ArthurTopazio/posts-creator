@@ -11,14 +11,12 @@ interface AllPostsTPD {
 
 const AllPosts: FC<AllPostsTPD> = ({ posts }) => {
 
-  console.log('all posts', posts);
-
   const postsList = posts.reverse().map(post =>
     <Post key={post.id} {...{ post }} size='lg' />);
 
   return (
-    <GridElementWrapper sx={{ minHeight: '60vh' }}>
-      {postsList}
+    <GridElementWrapper sx={{ minHeight: '35vh' }}>
+      {posts.length === 0 ? <h2>Posts</h2> : postsList}
     </GridElementWrapper>
   )
 }

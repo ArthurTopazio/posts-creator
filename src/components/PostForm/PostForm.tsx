@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import useInput from '../../hooks/useInput';
 import { IPost } from '../../models/IPost';
@@ -20,8 +20,17 @@ const PostForm: FC<PostFormTPD> = ({ postsAmount, formAction }) => {
   const avatarLink = useInput('');
   const postText = useInput('');
 
-  const handleSubmit = () => {
+  const [isValidForm, setIsValidForm] = useState(false);
 
+  useEffect(() => {
+    if (postAuthor.value && postText.value) {
+      setIsValidForm(true)
+    } else {
+      setIsValidForm(false)
+    }
+  }, [postText.value, postAuthor.value]);
+
+  const handleSubmit = () => {
     const newPost: IPost = {
       author: postAuthor.value,
       avatar_link: avatarLink.value,
@@ -29,19 +38,27 @@ const PostForm: FC<PostFormTPD> = ({ postsAmount, formAction }) => {
       create_time: String(Date.now()),
       id: Date.now()
     }
-
     formAction(newPost);
+    postAuthor.clearValue();
+    avatarLink.clearValue();
+    postText.clearValue();
   }
 
   return (
     <GridElementWrapper sx={{ minHeight: '30vh' }}>
       <Stack direction="column" spacing={3}>
 
-        <TextField {...postAuthor} label="Your name*" variant="standard" />
+        <TextField {...postAuthor} label="Your name" variant="standard" required />
         <TextField {...avatarLink} label="Avatar link" variant="filled" />
-        <TextField {...postText} label="Post text" multiline />
+        <TextField {...postText} label="Post text" multiline required />
 
-        <Button variant="contained" onClick={handleSubmit}> Post </Button>
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          disabled={!isValidForm}
+        >
+          Post
+        </Button>
         <Chip label={`Overall: ${postsAmount}`} sx={{ width: '30%' }} />
 
       </Stack>
